@@ -1,0 +1,11 @@
+server:
+  port: 9002
+spring:
+    thymeleaf:
+          mode: LEGACYHTML5
+    resources:
+      static-locations: file:/Users/gaara/Downloads/mp/
+    mvc:
+      static-path-pattern: /mp/**
+
+mypath: /Users/gaara/Downloads/mp/

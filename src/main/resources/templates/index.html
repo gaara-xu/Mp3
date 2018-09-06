@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>mp3</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+
+<p>
+    <div id="mpxxxx">
+
+</div>
+
+</p>
+<script type="text/javascript">
+    function aaa() {
+        console.log(1111);
+        $.ajax({
+            type: "GET",
+            url: "/mp3",
+            dataType: "json",
+            success: function(data){
+                var json = eval(data); //数组
+                for (var i=0;i < data.length; i++ ) {
+
+                    var str = "<audio preload=\"auto\" src=\"/mp/" + data[i] + "\" controls=\"controls\"></audio> </br>";
+                    // var str = "<audio preload=\"auto\" src=\"\\mp\\" + data[i] + "\"></audio> </br>";
+                    // document.getElementById("mp3").innerHTML(str);
+                    console.log(str);
+                    $("#mpxxxx").append(str);
+                }
+
+            }
+        });
+    }
+    aaa();
+
+</script>
+
+
+
+</body>
+</html>
