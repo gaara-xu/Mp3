@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @Slf4j
@@ -30,7 +31,14 @@ public class MainControllor {
         try{
             File file = new File(path);
             File[] files = file.listFiles();
-            for (int i=0;i<files.length;i++){
+            Random rand = new Random();
+            int random = rand.nextInt(files.length)+1;
+            if (random+10>files.length) {
+                random = files.length - 10;
+            }
+            System.out.println(random+"=======");
+//            for (int i=0;i<files.length;i++){
+            for (int i=random;i<random+10;i++){
 //                log.error(files[i].getName());
                 if (files[i].getName().length()>5&&files[i].getName().substring(files[i].getName().length()-4,files[i].getName().length()).equals(".mp3")){
                     list.add(files[i].getName());

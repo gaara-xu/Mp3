@@ -4,8 +4,10 @@ spring:
     thymeleaf:
           mode: LEGACYHTML5
     resources:
-      static-locations: file:/Users/gaara/Downloads/mp/
+#      static-locations: file:/Users/gaara/Downloads/mp/
+      static-locations: file:/home/mp/
     mvc:
       static-path-pattern: /mp/**
 
-mypath: /Users/gaara/Downloads/mp/
+#mypath: /Users/gaara/Downloads/mp/
+mypath: /home/mp/
