@@ -8,6 +8,10 @@ spring:
       static-locations: file:/home/mp/
     mvc:
       static-path-pattern: /mp/**
-
+cas:
+  server-url-prefix: https://118.24.182.136/cas/
+  server-login-url: https://118.24.182.136/cas/login
+  client-host-url: http://localjost:9002
+  validation-type: cas
 #mypath: /Users/gaara/Downloads/mp/
 mypath: /home/mp/
