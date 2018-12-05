@@ -23,7 +23,11 @@ public class MainControllor {
     public String admin(){
         return "index";
     }
-
+    @GetMapping("/favicon.ico")
+    public void go(){
+        System.out.println("哈哈哈哈哈哈");
+        return;
+    }
     @GetMapping("/mp3")
     @ResponseBody
     public List<String> getmp3(){
