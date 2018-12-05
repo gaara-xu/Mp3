@@ -9,7 +9,7 @@ spring:
     mvc:
       static-path-pattern: /mp/**
 cas:
-  server-url-prefix: https://cas.gaara-xu.com
+  server-url-prefix: https://www.gaara-xu.com
   server-login-url: https://cas.gaara-xu.com/cas/login
   client-host-url: http://www.gaara-xu.com:9002/
 #  client-host-url: http://118.24.182.136:9002
