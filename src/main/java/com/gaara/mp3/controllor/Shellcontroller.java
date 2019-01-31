@@ -56,19 +56,27 @@ public class Shellcontroller {
         JSONObject json = new JSONObject();
         JSONObject dockerid = new JSONObject();
         JSONObject dockername = new JSONObject();
-        try{
-            List<ArrayList> lists = execdocker("docker ps", null);
-            ArrayList<String> id = lists.get(0);
-            ArrayList<String> name = lists.get(1);
-            for (int i = 0;i<id.size();i++){
-                dockerid.put(""+i,id.get(i));
-                dockername.put(""+i,name.get(i));
-            }
+        dockerid.put("1","dockerid1");
+        dockerid.put("2","dockerid2");
+        dockerid.put("3","dockerid3");
+        dockerid.put("4","dockerid4");
+        dockername.put("1","name1");
+        dockername.put("2","name2");
+        dockername.put("3","name3");
+        dockername.put("4","name4");
+//        try{
+//            List<ArrayList> lists = execdocker("docker ps", null);
+//            ArrayList<String> id = lists.get(0);
+//            ArrayList<String> name = lists.get(1);
+//            for (int i = 0;i<id.size();i++){
+//                dockerid.put(""+i,id.get(i));
+//                dockername.put(""+i,name.get(i));
+//            }
             json.put("dockerid",dockerid);
             json.put("dockername",dockername);
-        }catch (Exception e){
-            json.put("message","请求出错");
-        }
+//        }catch (Exception e){
+//            json.put("message","请求出错");
+//        }
         System.out.println(json.toString());
         return json;
     }

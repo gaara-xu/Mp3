@@ -57,38 +57,50 @@
     </tr>
     </tbody>
 </table>
-<button type="submit" class="btn btn-info btn-fill pull-left" style="background-color: red;border-color: red" onclick="package()">Package</button>
+<div class="header">
+
+    <h4 class="title">Click this button to redeploy the system</h4>
+    <button type="submit" class="btn btn-info btn-fill pull-left" style="background-color: red;border-color: red" onclick="package()">Package</button>
+</div>
+
 
 <script type="text/javascript">
     function restart(id) {
         alert(id);
     }
     function package() {
-        window.open("/package");
+        if(window.confirm('你确定要重新部署吗？一经部署从前容器将全部销毁')){
+            window.open("/shell/package");
+            return true;
+        }else{
+            return false;
+        }
+
     }
 </script>
 <script type="text/javascript">
-    function aaa() {
-        console.log(1111);
+    function getdocker() {
         $.ajax({
             type: "GET",
-            url: "/mp3",
+            url: "/shell/docker",
             dataType: "json",
             success: function(data){
-                var json = eval(data); //数组
-                for (var i=0;i < data.length; i++ ) {
-
-                    var str = "<audio preload=\"auto\" src=\"/mp/" + data[i] + "\" controls=\"controls\"></audio> </br>";
-                    // var str = "<audio preload=\"auto\" src=\"\\mp\\" + data[i] + "\"></audio> </br>";
-                    // document.getElementById("mp3").innerHTML(str);
-                    console.log(str);
-                    $("#mpxxxx").append(str);
-                }
+                var jsonObj = eval( '(' + data + ')' );  // eval();方法
+                var jsonObj = JSON.parse( data );  // JSON.parse(); 方法
+            　　console.log( jsonObj.dockerid );  // 两种方法都可以正确输入 周星驰
+                // for (var i=0;i < data.length; i++ ) {
+                //
+                //     var str = "<audio preload=\"auto\" src=\"/mp/" + data[i] + "\" controls=\"controls\"></audio> </br>";
+                //     // var str = "<audio preload=\"auto\" src=\"\\mp\\" + data[i] + "\"></audio> </br>";
+                //     // document.getElementById("mp3").innerHTML(str);
+                //     console.log(str);
+                //     $("#mpxxxx").append(str);
+                // }
 
             }
         });
     }
-
+getdocker();
 </script>
 </body>
 </html>

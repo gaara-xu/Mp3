@@ -1,13 +1,13 @@
 server:
-  port: 9002
+  port: 9000
 spring:
     thymeleaf:
           mode: LEGACYHTML5
-    resources:
-#      static-locations: file:/Users/gaara/Downloads/mp/
-      static-locations: file:/home/mp/
-    mvc:
-      static-path-pattern: /mp/**
+#    resources:
+##      static-locations: file:/Users/gaara/Downloads/mp/
+#      static-locations: file:/home/mp/
+#    mvc:
+#      static-path-pattern: /mp/**
 #cas:
 #  server-url-prefix: https://www.gaara-xu.com
 #  server-login-url: https://cas.gaara-xu.com/cas/login
