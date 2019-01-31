@@ -1,11 +1,20 @@
 package com.gaara.mp3.controllor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import netscape.javascript.JSObject;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.io.BufferedReader;
-import java.io.Closeable;
-import java.io.File;
-import java.io.InputStreamReader;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.gaara.mp3.utils.ShellUtils.execCmd;
+import static com.gaara.mp3.utils.ShellUtils.execdocker;
+
 /********************************
  *    Author Gaara              *
  *    Version 1.0               *
@@ -14,6 +23,7 @@ import java.io.InputStreamReader;
  *    @Description TODO         *
  ********************************/
 @RestController
+@RequestMapping("/shell")
 public class Shellcontroller {
 
     @GetMapping("/test")
@@ -23,7 +33,7 @@ public class Shellcontroller {
             result = execCmd("java -version", null);
             System.out.println(result);
         }catch (Exception e){
-
+            e.printStackTrace();
         }
         return result;
     }
@@ -37,83 +47,81 @@ public class Shellcontroller {
             result = execCmd("pwd", null);
             System.out.println(result);
         }catch (Exception e){
-
+            e.printStackTrace();
         }
         return result;
     }
     @GetMapping("/docker")
-    public String docker(){
-        String result="";
+    public JSONObject docker(){
+        JSONObject json = new JSONObject();
+        JSONObject dockerid = new JSONObject();
+        JSONObject dockername = new JSONObject();
         try{
-            result = execCmd("docker ps", null);
+            List<ArrayList> lists = execdocker("docker ps", null);
+            ArrayList<String> id = lists.get(0);
+            ArrayList<String> name = lists.get(1);
+            for (int i = 0;i<id.size();i++){
+                dockerid.put(""+i,id.get(i));
+                dockername.put(""+i,name.get(i));
+            }
+            json.put("dockerid",dockerid);
+            json.put("dockername",dockername);
+        }catch (Exception e){
+            json.put("message","请求出错");
+        }
+        System.out.println(json.toString());
+        return json;
+    }
+
+
+
+    @GetMapping("/restart")
+    public String restart(@RequestParam String dockerid){
+        String str = "docker restart " +dockerid;
+        String result="";
+        System.out.println("the str ===="+str);
+        try{
+            result = execCmd(str, null);
             System.out.println(result);
         }catch (Exception e){
-
+            e.printStackTrace();
         }
         return result;
     }
 
-
-
-
-
-
-    /**
-     * 执行系统命令, 返回执行结果
-     *
-     * @param cmd 需要执行的命令
-     * @param dir 执行命令的子进程的工作目录, null 表示和当前主进程工作目录相同
-     */
-    public static String execCmd(String cmd, File dir) throws Exception {
-        StringBuilder result = new StringBuilder();
+    @RequestMapping(value = "/package", method = RequestMethod.GET)
+    public void publish(){
+        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+        response.setContentType("text/html; charset=UTF-8");
 
         Process process = null;
-        BufferedReader bufrIn = null;
-        BufferedReader bufrError = null;
-
+        String cmd = "sh /opt/docker/package-psi.sh";
         try {
-            // 执行命令, 返回一个子进程对象（命令在子进程中执行）
-            process = Runtime.getRuntime().exec(cmd, null, dir);
+            Runtime  runtime = Runtime.getRuntime();
+            process = runtime.exec(cmd);
 
-            // 方法阻塞, 等待命令执行完成（成功会返回0）
-            process.waitFor();
-
-            // 获取命令执行结果, 有两个结果: 正常的输出 和 错误的输出（PS: 子进程的输出就是主进程的输入）
-            bufrIn = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
-            bufrError = new BufferedReader(new InputStreamReader(process.getErrorStream(), "UTF-8"));
-
-            // 读取输出
-            String line = null;
-            while ((line = bufrIn.readLine()) != null) {
-                result.append(line).append('\n');
+            InputStream is = process.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is, "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            PrintWriter write = response.getWriter();
+            write.println("<script>");
+            write.println("setTimeout(function(){document.body.style.background='#333';document.body.style.color='#fff';}, 100)");
+            write.println("</script>");
+            String line ;
+            while((line = br.readLine()) != null){
+                write.println(line + "<br>");
+                write.flush();
             }
-            while ((line = bufrError.readLine()) != null) {
-                result.append(line).append('\n');
-            }
-
-        } finally {
-            closeStream(bufrIn);
-            closeStream(bufrError);
-
-            // 销毁子进程
-            if (process != null) {
-                process.destroy();
-            }
-        }
-
-        // 返回执行结果
-        return result.toString();
-    }
-
-    private static void closeStream(Closeable stream) {
-        if (stream != null) {
-            try {
-                stream.close();
-            } catch (Exception e) {
-                // nothing
-            }
+            write.close();
+            is.close();
+            isr.close();
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
+
 
 }
 
