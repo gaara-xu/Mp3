@@ -94,14 +94,14 @@
                 for (var i = 0; i < data.length; i++) {
                     num++;
                     var status = "";
-                    getstatus(i,data[i].docker_id);
-                    status += "<td id='color" + data[i].docker_id  + "' style='color: red'>运行故障";
+                    getstatus(i);
+                    status += "<td id='color" + i + "' style='color: red'>运行故障";
                     var str = "<tr>\n" +
                         "        <td>" + data[i].docker_id + "</td>\n" +
                         "        <td>" + data[i].docker_name + "</td>\n" +
                         status + "</td>\n" +
                         "        <td><button type=\"submit\" id='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\" onclick=\"restart(this.id)\">Restart</button>" +
-                        "<button type=\"submit\" name='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\"style=\"background-color: green;border-color: green\"  onclick=\"start(this.name)\">stop</button>"+
+                        "<button type=\"submit\" name='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\"style=\"background-color: green;border-color: green\"  onclick=\"start(this.name)\">start</button>"+
                         "<button type=\"submit\" name='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\"style=\"background-color: red;border-color: red\"  onclick=\"stop(this.name)\">stop</button>"+
                         "</td>\n" +
                         "    </tr>";
@@ -111,7 +111,8 @@
         });
     }
 getdocker();
-    function getstatus(id,dockerid) {
+    function getstatus(id) {
+        var thisid = num - id;
         $.ajax({
             type: "GET",
             url: "http://188.131.133.29:808"+id+"/psi/utils/ping",
@@ -119,17 +120,17 @@ getdocker();
             jsonp:'callback',
             jsonpCallback:"successCallback",
             success: function (data) {
-                    document.getElementById('color'+dockerid).style.color = 'green';
-                    document.getElementById('color'+dockerid).innerText = '运行正常';
+                    document.getElementById('color'+thisid).style.color = 'green';
+                    document.getElementById('color'+thisid).innerText = '运行正常';
             },
             error:function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log(XMLHttpRequest.status);
                 if (XMLHttpRequest.status==200){
-                    document.getElementById('color'+dockerid).style.color = 'green';
-                    document.getElementById('color'+dockerid).innerText = '运行正常';
+                    document.getElementById('color'+thisid).style.color = 'green';
+                    document.getElementById('color'+thisid).innerText = '运行正常';
                 }else {
-                    document.getElementById('color'+dockerid).style.color = 'red';
-                    document.getElementById('color'+dockerid).innerText = '运行故障';
+                    document.getElementById('color'+thisid).style.color = 'red';
+                    document.getElementById('color'+thisid).innerText = '运行故障';
                 }
             }
         });
