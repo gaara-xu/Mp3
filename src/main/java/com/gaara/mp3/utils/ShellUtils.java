@@ -92,6 +92,7 @@ public class ShellUtils {
 
             // 读取输出
             String line = null;
+            bufrIn.readLine();//跳过第一行
             while ((line = bufrIn.readLine()) != null) {
                 docker = new JSONObject();
                 docker.put("docker_id",line.substring(0,12));
