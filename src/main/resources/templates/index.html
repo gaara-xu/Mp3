@@ -69,7 +69,7 @@
                         "        <td>" + data[i].docker_id + "</td>\n" +
                         "        <td>" + data[i].docker_name + "</td>\n" +
                         status + "</td>\n" +
-                        "        <td><button type=\"submit\" id='status" + data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\" onclick=\"restart(this.id)\">Restart</button></td>\n" +
+                        "        <td><button type=\"submit\" id='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\" onclick=\"restart(this.id)\">Restart</button></td>\n" +
                         "    </tr>";
                     $("#tbody").append(str);
                 }
