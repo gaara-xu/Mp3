@@ -79,7 +79,32 @@ public class Shellcontroller {
         }
         return result;
     }
-
+    @GetMapping("/start")
+    public String start(@RequestParam String dockerid){
+        String str = "docker start " +dockerid;
+        String result="";
+        System.out.println("the str ===="+str);
+        try{
+            result = execCmd(str, null);
+            System.out.println(result);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+    @GetMapping("/stop")
+    public String stop(@RequestParam String dockerid){
+        String str = "docker stop " +dockerid;
+        String result="";
+        System.out.println("the str ===="+str);
+        try{
+            result = execCmd(str, null);
+            System.out.println(result);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
     @RequestMapping(value = "/package", method = RequestMethod.GET)
     public void publish(){
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
