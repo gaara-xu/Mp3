@@ -101,8 +101,8 @@
                         "        <td>" + data[i].docker_name + "</td>\n" +
                         status + "</td>\n" +
                         "        <td><button type=\"submit\" id='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\" onclick=\"restart(this.id)\">Restart</button>" +
-                        "+<button type=\"submit\" name='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\" style=\"background-color: green;border-color: green\" oonclick=\"start(this.name)\">start</button>"+
-                        "+<button type=\"submit\" name='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\"style=\"background-color: red;border-color: red\" o onclick=\"stop(this.name)\">stopt</button>"+
+                        "<button type=\"submit\" name='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\"style=\"background-color: green;border-color: green\"  onclick=\"start(this.name)\">stop</button>"+
+                        "<button type=\"submit\" name='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\"style=\"background-color: red;border-color: red\"  onclick=\"stop(this.name)\">stop</button>"+
                         "</td>\n" +
                         "    </tr>";
                     $("#tbody").append(str);
