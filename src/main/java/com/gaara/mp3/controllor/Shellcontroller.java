@@ -56,7 +56,7 @@ public class Shellcontroller {
     public JSONArray docker(){
         JSONArray json = new JSONArray();
         try{
-            json = execdocker("docker ps", null);
+            json = execdocker("docker ps  -a", null);
         }catch (Exception e){
             e.printStackTrace();
         }
