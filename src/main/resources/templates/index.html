@@ -112,7 +112,6 @@
     }
 getdocker();
     function getstatus(id) {
-        var thisid = num - id;
         $.ajax({
             type: "GET",
             url: "http://188.131.133.29:808"+id+"/psi/utils/ping",
@@ -120,17 +119,17 @@ getdocker();
             jsonp:'callback',
             jsonpCallback:"successCallback",
             success: function (data) {
-                    document.getElementById('color'+thisid).style.color = 'green';
-                    document.getElementById('color'+thisid).innerText = '运行正常';
+                    document.getElementById('color'+id).style.color = 'green';
+                    document.getElementById('color'+id).innerText = '运行正常';
             },
             error:function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log(XMLHttpRequest.status);
                 if (XMLHttpRequest.status==200){
-                    document.getElementById('color'+thisid).style.color = 'green';
-                    document.getElementById('color'+thisid).innerText = '运行正常';
+                    document.getElementById('color'+id).style.color = 'green';
+                    document.getElementById('color'+id).innerText = '运行正常';
                 }else {
-                    document.getElementById('color'+thisid).style.color = 'red';
-                    document.getElementById('color'+thisid).innerText = '运行故障';
+                    document.getElementById('color'+id).style.color = 'red';
+                    document.getElementById('color'+id).innerText = '运行故障';
                 }
             }
         });
