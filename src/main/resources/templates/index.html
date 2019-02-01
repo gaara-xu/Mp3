@@ -85,7 +85,8 @@ getdocker();
             jsonp:'callback',
             jsonpCallback:"successCallback",
             success: function (data) {
-                console.log(data);
+                    document.getElementById('color'+id).style.color = 'green';
+                    document.getElementById('color'+id).innerText = '运行正常';
             },
             error:function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log(XMLHttpRequest.status);
