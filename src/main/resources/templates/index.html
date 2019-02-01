@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>系统监控管理平台</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!--<script type="text/javascript" src="js/json.js"></script>-->
     <link href="css/demo.css" rel="stylesheet"/>
     <link href="css/animate.min.css" rel="stylesheet"/>
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
@@ -18,47 +19,9 @@
     <th>Docker_Status</th>
     <th>Docker_restart</th>
     </thead>
-    <tbody>
-    <tr>
-        <td>Dakota Rice</td>
-        <td>$36,738</td>
-        <td>Niger</td>
-        <td><button type="submit" id="aaa" class="btn btn-info btn-fill pull-left" onclick="restart(this.id)">Restart</button></td>
-    </tr>
-    <tr>
-        <td>Minerva Hooper</td>
-        <td>$23,789</td>
-        <td>Curaçao</td>
-        <td><button type="submit" class="btn btn-info btn-fill pull-left">Restart</button></td>
-    </tr>
-    <tr>
-        <td>Sage Rodriguez</td>
-        <td>$56,142</td>
-        <td>Netherlands</td>
-        <td><button type="submit" class="btn btn-info btn-fill pull-left">Restart</button></td>
-    </tr>
-    <tr>
-        <td>Philip Chaney</td>
-        <td>$38,735</td>
-        <td>Korea, South</td>
-        <td><button type="submit" class="btn btn-info btn-fill pull-left">Restart</button></td>
-    </tr>
-    <tr>
-        <td>Doris Greene</td>
-        <td>$63,542</td>
-        <td>Malawi</td>
-        <td><button type="submit" class="btn btn-info btn-fill pull-left">Restart</button></td>
-    </tr>
-    <tr>
-        <td>Mason Porter</td>
-        <td>$78,615</td>
-        <td>Chile</td>
-        <td><button type="submit" class="btn btn-info btn-fill pull-left">Restart</button></td>
-    </tr>
-    </tbody>
+    <tbody id="tbody"></tbody>
 </table>
 <div class="header">
-
     <h4 class="title">Click this button to redeploy the system</h4>
     <button type="submit" class="btn btn-info btn-fill pull-left" style="background-color: red;border-color: red" onclick="package()">Package</button>
 </div>
@@ -66,8 +29,21 @@
 
 <script type="text/javascript">
     function restart(id) {
-        alert(id);
+        if(window.confirm('你确定要重启本服务吗？')){
+            $.ajax({
+                type: "GET",
+                url: "/shell/restart?dockerid="+id,
+                dataType: "json",
+                success: function(data){
+                    console.log(data);
+                }
+            });
+            return true;
+        }else{
+            return false;
+        }
     }
+
     function package() {
         if(window.confirm('你确定要重新部署吗？一经部署从前容器将全部销毁')){
             window.open("/shell/package");
@@ -84,23 +60,42 @@
             type: "GET",
             url: "/shell/docker",
             dataType: "json",
-            success: function(data){
-                var jsonObj = eval( '(' + data + ')' );  // eval();方法
-                var jsonObj = JSON.parse( data );  // JSON.parse(); 方法
-            　　console.log( jsonObj.dockerid );  // 两种方法都可以正确输入 周星驰
-                // for (var i=0;i < data.length; i++ ) {
-                //
-                //     var str = "<audio preload=\"auto\" src=\"/mp/" + data[i] + "\" controls=\"controls\"></audio> </br>";
-                //     // var str = "<audio preload=\"auto\" src=\"\\mp\\" + data[i] + "\"></audio> </br>";
-                //     // document.getElementById("mp3").innerHTML(str);
-                //     console.log(str);
-                //     $("#mpxxxx").append(str);
-                // }
-
+            success: function(data) {
+                for (var i = 0; i < data.length; i++) {
+                    var status = "";
+                    getstatus(i);
+                    status += "<td id='color" + i + "' style='color: red'>运行故障";
+                    var str = "<tr>\n" +
+                        "        <td>" + data[i].docker_id + "</td>\n" +
+                        "        <td>" + data[i].docker_name + "</td>\n" +
+                        status + "</td>\n" +
+                        "        <td><button type=\"submit\" id='status" + data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\" onclick=\"restart(this.id)\">Restart</button></td>\n" +
+                        "    </tr>";
+                    $("#tbody").append(str);
+                }
             }
         });
     }
 getdocker();
+    function getstatus(id) {
+        $.ajax({
+            type: "GET",
+            url: "http://188.131.133.29:808"+id+"/psi/utils/ping",
+            dataType:'jsonp',
+            jsonp:'callback',
+            jsonpCallback:"successCallback",
+            success: function (data) {
+                console.log(data);
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest.status);
+                if (XMLHttpRequest.status==200){
+                    document.getElementById('color'+id).style.color = 'green';
+                    document.getElementById('color'+id).innerText = '运行正常';
+                }
+            }
+        });
+    }
 </script>
 </body>
 </html>
