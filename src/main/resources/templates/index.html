@@ -55,6 +55,7 @@
     }
 </script>
 <script type="text/javascript">
+    var num = 0;
     function getdocker() {
         $.ajax({
             type: "GET",
@@ -62,6 +63,7 @@
             dataType: "json",
             success: function(data) {
                 for (var i = 0; i < data.length; i++) {
+                    num++;
                     var status = "";
                     getstatus(i);
                     status += "<td id='color" + i + "' style='color: red'>运行故障";
@@ -96,6 +98,15 @@ getdocker();
                 }
             }
         });
+    }
+
+    //自动刷新
+    var int=self.setInterval("clock()",2000);
+    function clock() {
+        console.log(num);
+        for (var i = 0 ; i<num ;i ++){
+            getstatus(i);
+        }
     }
 </script>
 </body>
