@@ -114,7 +114,7 @@ getdocker();
     function getstatus(id) {
         $.ajax({
             type: "GET",
-            url: "http://188.131.133.29:808"+id+"/psi/utils/ping",
+            url: "http://188.131.133.29:808"+id+"/psi/services/utils/ping",
             dataType:'jsonp',
             jsonp:'callback',
             jsonpCallback:"successCallback",
