@@ -24,7 +24,7 @@
                 var json = eval(data); //数组
                 for (var i=0;i < data.length; i++ ) {
 
-                    var str = "<audio preload=\"auto\" src=\"/mp/" + data[i] + "\" controls=\"controls\"></audio> </br>";
+                    var str = "<audio preload=\"auto\" src=\"/mp/" + data[i] + "\" autobuffer='true' controls=\"controls\"></audio> </br>";
                     // var str = "<audio preload=\"auto\" src=\"\\mp\\" + data[i] + "\"></audio> </br>";
                     // document.getElementById("mp3").innerHTML(str);
                     console.log(str);
