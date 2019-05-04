@@ -1,17 +1,11 @@
-package com.gaara.mp3.controllor;
+package com.gaara.mp3.controller;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import netscape.javascript.JSObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.gaara.mp3.utils.ShellUtils.execCmd;
 import static com.gaara.mp3.utils.ShellUtils.execdocker;

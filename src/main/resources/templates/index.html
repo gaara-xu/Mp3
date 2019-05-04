@@ -23,7 +23,8 @@
 </table>
 <div class="header">
     <h4 class="title">Click this button to redeploy the system</h4>
-    <button type="submit" class="btn btn-info btn-fill pull-left" style="background-color: red;border-color: red" onclick="package()">Package</button>
+    <button type="submit" class="btn btn-info btn-fill pull-left" style="background-color: red;border-color: red" onclick="package()">Package-Server</button>
+    <button type="submit" class="btn btn-info btn-fill pull-left" style="background-color: red;border-color: red" onclick="packageweb()">Package-Web</button>
 </div>
 
 
@@ -82,6 +83,16 @@
         }
 
     }
+    function packageweb() {
+        if(window.confirm('你确定要重新部署吗？一经部署从前容器将全部销毁')){
+            window.open("/page/package");
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
 </script>
 <script type="text/javascript">
     var num = 0;

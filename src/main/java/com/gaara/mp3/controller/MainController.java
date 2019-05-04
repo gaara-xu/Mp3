@@ -1,4 +1,4 @@
-package com.gaara.mp3.controllor;
+package com.gaara.mp3.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import java.util.Random;
 
 @Controller
 @Slf4j
-public class MainControllor {
+public class MainController {
 
     @Value("${mypath}")
     private String path;
