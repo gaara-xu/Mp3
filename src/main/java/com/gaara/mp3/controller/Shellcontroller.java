@@ -139,7 +139,36 @@ public class Shellcontroller {
         }
     }
 
-
+    @RequestMapping(value = "/server0log", method = RequestMethod.GET)
+    public void server0log(){
+        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+        response.setContentType("text/html; charset=UTF-8");
+        Process process = null;
+        String cmd = "docker logs -f psi-server0";
+        try {
+            Runtime  runtime = Runtime.getRuntime();
+            process = runtime.exec(cmd);
+            System.out.println("log start ");
+            InputStream is = process.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is, "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            PrintWriter write = response.getWriter();
+            write.println("<script>");
+            write.println("setTimeout(function(){document.body.style.background='#333';document.body.style.color='#fff';}, 100)");
+            write.println("</script>");
+            String line ;
+            while((line = br.readLine()) != null){
+                write.println(line + "<br>");
+                write.flush();
+            }
+            write.close();
+            is.close();
+            isr.close();
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 

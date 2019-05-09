@@ -6,6 +6,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <!--<script type="text/javascript" src="js/json.js"></script>-->
     <link href="css/demo.css" rel="stylesheet"/>
+    <link href="../static/css/style.css" rel="stylesheet"/>
     <link href="css/animate.min.css" rel="stylesheet"/>
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
     <link href="css/light-bootstrap-dashboard.css" rel="stylesheet"/>
@@ -23,10 +24,9 @@
 </table>
 <div class="header">
     <h4 class="title">Click this button to redeploy the system</h4>
-    <button type="submit" class="btn btn-info btn-fill pull-left" style="background-color: red;border-color: red" onclick="package()">Package-Server</button>
-    </br>
-    </br>
-    <button type="submit" class="btn btn-info btn-fill pull-left" style="background-color: red;border-color: red" onclick="packageweb()">Package-Web</button>
+    <button type="submit" class="button-server btn btn-info btn-fill pull-left " onclick="package()">Package-Server</button>
+    <button type="submit" class="btn btn-info btn-fill pull-left button-server" onclick="packageweb()">Package-Web</button>
+    <button type="submit" class="btn btn-info btn-fill pull-left button-server" onclick="serverLog()">serverLog</button>
 </div>
 
 
@@ -93,6 +93,9 @@
             return false;
         }
 
+    }
+    function serverLog() {
+        window.open("/page/server0log");
     }
 
 </script>
