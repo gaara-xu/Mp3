@@ -105,7 +105,11 @@
     function serverLog() {
         window.open("/shell/server0log");
     }
-
+    //自动刷新
+    var int=self.setInterval("clock()",5000);
+    function clock() {
+       window.location.reload();
+    }
 </script>
 
 </body>
