@@ -16,7 +16,7 @@ import java.util.List;
  *    Author Gaara              *
  *    Version 1.0               *
  *    @ClassName ShellUtils
- *    @Date 2019/1/30 下午7:01     
+ *    @Date 2019/1/30 下午7:01
  *    @Description TODO         *
  ********************************/
 public class ShellUtils {
@@ -80,7 +80,6 @@ public class ShellUtils {
         BufferedReader bufrIn = null;
         BufferedReader bufrError = null;
         List<Docker> list = new ArrayList<>();
-        Docker docker = new Docker();
         try {
             // 执行命令, 返回一个子进程对象（命令在子进程中执行）
             process = Runtime.getRuntime().exec(cmd, null, dir);
@@ -96,6 +95,7 @@ public class ShellUtils {
             String line = null;
             bufrIn.readLine();//跳过第一行
             while ((line = bufrIn.readLine()) != null) {
+                Docker docker = new Docker();
                 docker.setDocker_id(line.substring(0,12));
                 docker.setDocker_name(line.substring(line.length()-11,line.length()));
                 list.add(docker);
