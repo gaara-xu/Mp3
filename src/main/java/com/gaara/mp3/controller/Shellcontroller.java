@@ -1,5 +1,6 @@
 package com.gaara.mp3.controller;
 import com.alibaba.fastjson.JSONArray;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -20,6 +21,7 @@ import static com.gaara.mp3.utils.ShellUtils.execdocker;
  ********************************/
 @RestController
 @RequestMapping("/shell")
+@Slf4j
 public class Shellcontroller {
 
     @GetMapping("/test")
@@ -129,6 +131,7 @@ public class Shellcontroller {
         String cmd = "docker logs -f "+dockerId +"";
         try {
             Runtime  runtime = Runtime.getRuntime();
+            log.info(cmd);
             process = runtime.exec(cmd);
             System.out.println("log start ");
             InputStream is = process.getInputStream();
