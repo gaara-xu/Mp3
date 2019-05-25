@@ -98,7 +98,6 @@ public class ShellUtils {
                 Docker docker = new Docker();
                 docker.setDocker_id(line.substring(0,12));
                 docker.setDocker_name(line.substring(line.length()-11,line.length()));
-                System.out.println(docker.toString());
                 list.add(docker);
             }
         } finally {
