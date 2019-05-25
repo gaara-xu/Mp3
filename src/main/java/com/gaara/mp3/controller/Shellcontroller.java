@@ -126,7 +126,7 @@ public class Shellcontroller {
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         response.setContentType("text/html; charset=UTF-8");
         Process process = null;
-        String cmd = "docker logs -f "+dockerId;
+        String cmd = "docker logs -f "+dockerId +"";
         try {
             Runtime  runtime = Runtime.getRuntime();
             process = runtime.exec(cmd);
