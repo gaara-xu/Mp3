@@ -106,7 +106,9 @@
 
     }
     function serverLog(dockerId) {
-        window.open("/shell/log/"+dockerId);
+        var url = "/shell/log/"+dockerId+"";
+        console.log(url);
+        window.open(url);
     }
     //自动刷新
     var int=self.setInterval("clock()",5000);
