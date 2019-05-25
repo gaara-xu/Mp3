@@ -124,7 +124,7 @@ public class Shellcontroller {
     }
 
     @RequestMapping(value = "/log/{dockerId}", method = RequestMethod.GET)
-    public void server0log(@PathParam("dockerId")String dockerId){
+    public void server0log(@PathVariable("dockerId")String dockerId){
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         response.setContentType("text/html; charset=UTF-8");
         Process process = null;
