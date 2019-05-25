@@ -3,6 +3,8 @@ server:
 spring:
     thymeleaf:
           mode: LEGACYHTML5
+          prefix: classpath:/templates/
+          suffix: .html
 #    resources:
 ##      static-locations: file:/Users/gaara/Downloads/mp/
 #      static-locations: file:/home/mp/
