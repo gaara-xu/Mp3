@@ -46,25 +46,6 @@ public class Shellcontroller {
         }
         return result;
     }
-    @GetMapping("/docker")
-    public JSONArray docker(){
-        JSONArray json = new JSONArray();
-
-      /*  JSONObject docker ;
-        for (int i = 0; i < 8; i++) {
-            docker=new JSONObject();
-            docker.put("docker_id","docker_id"+i);
-            docker.put("docker_name","docker_name"+i);
-            json.add(docker);
-        }*/
-        try{
-            json = execdocker("docker ps  -a", null);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        System.out.println(json.toString());
-        return json;
-    }
 
 
 

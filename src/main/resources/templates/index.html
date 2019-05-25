@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>系统监控管理平台</title>
@@ -20,7 +20,15 @@
     <th>Docker_Status</th>
     <th>Docker_operation</th>
     </thead>
-    <tbody id="tbody"></tbody>
+    <tbody >
+        <tr th:each="docker:${dockerList}">
+            <td th:utext="${docker.docker_id}"></td>
+            <td th:utext="${docker.docker_name}"></td>
+            <td th:if="${docker.docker_status} == false" id="color2" style="color: red">运行故障</td>
+            <td th:if="${docker.docker_status} == true" id="color0" style="color: green;">运行正常</td>
+            <td><button type="submit"  th:id="${docker.docker_id}"  class="btn btn-info btn-fill pull-left" onclick="restart(this.id)">Restart</button><button type="submit" name="e33dcdf7a721" class="btn btn-info btn-fill pull-left" style="background-color: green;border-color: green" onclick="start(this.name)">start</button><button type="submit" name="e33dcdf7a721" class="btn btn-info btn-fill pull-left" style="background-color: red;border-color: red" onclick="stop(this.name)">stop</button></td>
+        </tr>
+    </tbody>
 </table>
 <div class="header">
     <h4 class="title">Click this button to redeploy the system</h4>
@@ -86,7 +94,7 @@
 
     }
     function packageweb() {
-        if(window.confirm('你确定要重新部署吗？一经部署从前容器将全部销毁')){
+        if(window.confirm('你确定要重新部署前端页面吗？')){
             window.open("/page/package");
             return true;
         }else{
@@ -99,67 +107,7 @@
     }
 
 </script>
-<script type="text/javascript">
-    var num = 0;
-    function getdocker() {
-        $.ajax({
-            type: "GET",
-            url: "/shell/docker",
-            dataType: "json",
-            success: function(data) {
-                for (var i = 0; i < data.length; i++) {
-                    num++;
-                    var status = "";
-                    getstatus(i);
-                    status += "<td id='color" + i + "' style='color: red'>运行故障";
-                    var str = "<tr>\n" +
-                        "        <td>" + data[i].docker_id + "</td>\n" +
-                        "        <td>" + data[i].docker_name + "</td>\n" +
-                        status + "</td>\n" +
-                        "        <td><button type=\"submit\" id='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\" onclick=\"restart(this.id)\">Restart</button>" +
-                        "<button type=\"submit\" name='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\"style=\"background-color: green;border-color: green\"  onclick=\"start(this.name)\">start</button>"+
-                        "<button type=\"submit\" name='"+ data[i].docker_id + "' class=\"btn btn-info btn-fill pull-left\"style=\"background-color: red;border-color: red\"  onclick=\"stop(this.name)\">stop</button>"+
-                        "</td>\n" +
-                        "    </tr>";
-                    $("#tbody").append(str);
-                }
-            }
-        });
-    }
-getdocker();
-    function getstatus(id) {
-        $.ajax({
-            type: "GET",
-            url: "http://39.97.186.148:808"+id+"/psi/services/utils/ping",
-            dataType:'jsonp',
-            jsonp:'callback',
-            jsonpCallback:"successCallback",
-            success: function (data) {
-                    document.getElementById('color'+id).style.color = 'green';
-                    document.getElementById('color'+id).innerText = '运行正常';
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log(XMLHttpRequest.status);
-                if (XMLHttpRequest.status==200){
-                    document.getElementById('color'+id).style.color = 'green';
-                    document.getElementById('color'+id).innerText = '运行正常';
-                }else {
-                    document.getElementById('color'+id).style.color = 'red';
-                    document.getElementById('color'+id).innerText = '运行故障';
-                }
-            }
-        });
-    }
 
-    //自动刷新
-    var int=self.setInterval("clock()",2000);
-    function clock() {
-        console.log(num);
-        for (var i = 0 ; i<num ;i ++){
-            getstatus(i);
-        }
-    }
-</script>
 </body>
 </html>
 

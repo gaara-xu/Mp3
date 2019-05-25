@@ -2,7 +2,9 @@ package com.gaara.mp3.utils;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.gaara.mp3.po.Docker;
 
+import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
@@ -73,12 +75,12 @@ public class ShellUtils {
      * @return
      * @throws Exception
      */
-    public static JSONArray execdocker(String cmd, File dir) throws Exception {
+    public static List<Docker> execdocker(String cmd, File dir) throws Exception {
         Process process = null;
         BufferedReader bufrIn = null;
         BufferedReader bufrError = null;
-        JSONArray json = new JSONArray();
-        JSONObject docker;
+        List<Docker> list = new ArrayList<>();
+        Docker docker = new Docker();
         try {
             // 执行命令, 返回一个子进程对象（命令在子进程中执行）
             process = Runtime.getRuntime().exec(cmd, null, dir);
@@ -94,10 +96,9 @@ public class ShellUtils {
             String line = null;
             bufrIn.readLine();//跳过第一行
             while ((line = bufrIn.readLine()) != null) {
-                docker = new JSONObject();
-                docker.put("docker_id",line.substring(0,12));
-                docker.put("docker_name",line.substring(line.length()-11,line.length()));
-                json.add(docker);
+                docker.setDocker_id(line.substring(0,12));
+                docker.setDocker_name(line.substring(line.length()-11,line.length()));
+                list.add(docker);
             }
         } finally {
             closeStream(bufrIn);
@@ -108,7 +109,7 @@ public class ShellUtils {
             }
         }
         // 返回执行结果
-        return json;
+        return list;
     }
 
     private static void closeStream(Closeable stream) {
