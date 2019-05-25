@@ -5,6 +5,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
 import java.io.*;
 
 import static com.gaara.mp3.utils.ShellUtils.execCmd;
@@ -120,12 +121,12 @@ public class Shellcontroller {
         }
     }
 
-    @RequestMapping(value = "/server0log", method = RequestMethod.GET)
-    public void server0log(){
+    @RequestMapping(value = "/log/{dockerId}", method = RequestMethod.GET)
+    public void server0log(@PathParam("dockerId")String dockerId){
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         response.setContentType("text/html; charset=UTF-8");
         Process process = null;
-        String cmd = "docker logs -f psi-server0";
+        String cmd = "docker logs -f "+dockerId;
         try {
             Runtime  runtime = Runtime.getRuntime();
             process = runtime.exec(cmd);
