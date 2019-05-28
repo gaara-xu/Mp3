@@ -28,7 +28,9 @@ public class Shellcontroller {
     public String mmain(){
         String result="";
         try{
-            result = execCmd("java -version", null);
+            result = execCmd("ssh root@39.97.186.148", null);
+            System.out.println(result);
+            result = execCmd("ifconfig",null);
             System.out.println(result);
         }catch (Exception e){
             e.printStackTrace();
