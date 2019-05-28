@@ -1,5 +1,6 @@
 package com.gaara.mp3.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import static com.gaara.mp3.utils.ShellUtils.execCmd;
+
 /**
  * Created by Gaara_Xu
  * on 2019/5/4.
@@ -19,6 +22,19 @@ import java.io.PrintWriter;
 @RestController
 @RequestMapping("/page")
 public class PageController {
+    @GetMapping("/test")
+    public String mmain(){
+        String result="";
+        try{
+            result = execCmd("ssh root@39.97.186.148", null);
+            System.out.println(result);
+            result = execCmd("ifconfig",null);
+            System.out.println(result);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
 
     @RequestMapping(value = "/package", method = RequestMethod.GET)
     public void publish(){

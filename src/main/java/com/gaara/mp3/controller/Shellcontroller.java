@@ -24,19 +24,6 @@ import static com.gaara.mp3.utils.ShellUtils.execdocker;
 @Slf4j
 public class Shellcontroller {
 
-    @GetMapping("/test")
-    public String mmain(){
-        String result="";
-        try{
-            result = execCmd("ssh root@39.97.186.148", null);
-            System.out.println(result);
-            result = execCmd("ifconfig",null);
-            System.out.println(result);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return result;
-    }
 
 
 
