@@ -5,6 +5,10 @@ spring:
           mode: LEGACYHTML5
           prefix: classpath:/templates/
           suffix: .html
+    mvc:
+      static-path-pattern: /**
+    resources:
+      static-locations: ["classpath:/templates/","classpath:/META-INF/resources/","classpath:/static/"]
 #    resources:
 ##      static-locations: file:/Users/gaara/Downloads/mp/
 #      static-locations: file:/home/mp/
