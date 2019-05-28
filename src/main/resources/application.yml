@@ -8,7 +8,7 @@ spring:
     mvc:
       static-path-pattern: /**
     resources:
-      static-locations: ["classpath:/templates/","classpath:/META-INF/resources/","classpath:/static/"]
+      static-locations: ["classpath:/templates/","classpath:/META-INF/resources/","classpath:/static/","classpath:/static/css"]
 #    resources:
 ##      static-locations: file:/Users/gaara/Downloads/mp/
 #      static-locations: file:/home/mp/
