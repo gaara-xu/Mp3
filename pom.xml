@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.gaara</groupId>
-	<artifactId>mp3</artifactId>
+	<artifactId>worm</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
-	<name>mp3</name>
+	<name>worm</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -39,22 +39,12 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.28</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>net.unicon.cas</groupId>
-			<artifactId>cas-client-autoconfig-support</artifactId>
-			<version>2.1.0-GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+
+
 	</dependencies>
 
 	<build>

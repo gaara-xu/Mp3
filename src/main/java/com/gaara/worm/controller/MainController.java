@@ -1,9 +1,8 @@
-package com.gaara.mp3.controller;
+package com.gaara.worm.controller;
 
 
 import com.alibaba.fastjson.JSONArray;
-import com.gaara.mp3.po.Docker;
-import com.gaara.mp3.utils.HttpRequest;
+import com.gaara.worm.utils.HttpRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static com.gaara.mp3.utils.ShellUtils.execdocker;
 
 @Controller
 @Slf4j
@@ -29,18 +27,7 @@ public class MainController {
     public String heartBeatCheck(ModelMap modelMap){
         HttpRequest httpRequest = new HttpRequest();
         boolean heart = false;
-        List<Docker> list = new ArrayList<>();
         JSONArray json = new JSONArray();
-        try{
-            list = execdocker("docker ps  -a", null);
-            for (int i = 0; i < 7; i++) {
-                heart= httpRequest.checkoutHeart("http://127.0.0.1:808"+i+"/psi/services/utils/ping");
-                list.get(i).setDocker_status(heart);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        modelMap.addAttribute("dockerList",list);
         return "index";
     }
     @GetMapping("/favicon.ico")

@@ -1,0 +1,75 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8"/>
+    <title>hello</title>
+    <script src="jquery-3.3.1.js"></script>
+</head>
+
+<body>
+
+
+<input type="radio" checked ="checked" name="type" value="text">小说 </input>
+<input type="radio"  name="type" value="mp3">音频</input>
+<input type="radio"  name="type" value="mp4">视频</input>
+<input type="radio"  name="type" value="image">图片</input>
+<br>
+网址: <input type="text" id="url"  />
+<br>
+标题关键字开始：<input type="text" id="title_start"  />
+<br>
+标题关键字结束：<input type="text" id="title_end"  />
+<br>
+列表关键字开始：<input type="text" id="list_start"  />
+<br>
+列表关键字结束：<input type="text" id="list_end"  />
+<br>
+分页关键字开始：<input type="text" id="page_start"  />
+<br>
+分页关键字结束：<input type="text" id="page_end"  />
+<br>
+<input type="button" value="提交" onclick="submmit()"/>
+
+
+<script type="text/javascript">
+
+    function getRedio() {
+        var value = "";
+        var radio = document.getElementsByName("type");
+        for (var i = 0; i < radio.length; i++) {
+            if (radio[i].checked == true) {
+                value = radio[i].value;
+                break;
+            }
+        }
+        return value;
+    }
+    function submmit() {
+        var worm = {
+            "url":document.getElementById("url").value,
+            "title_start":document.getElementById("title_start").value,
+            "list_start":document.getElementById("list_start").value,
+            "page_start":document.getElementById("page_start").value,
+            "page_end":document.getElementById("page_end").value,
+            "title_end":document.getElementById("title_end").value,
+            "list_end":document.getElementById("list_end").value,
+            "type":getRedio()
+        }
+        console.log(worm)
+    }
+
+    function restart(id) {
+        $.ajax({
+            type: "POST",
+            data: worm,
+            url: "/worm/test",
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
+

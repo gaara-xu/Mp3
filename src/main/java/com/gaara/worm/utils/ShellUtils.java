@@ -1,16 +1,9 @@
-package com.gaara.mp3.utils;
+package com.gaara.worm.utils;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.gaara.mp3.po.Docker;
-
-import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 /********************************
  *    Author Gaara              *
@@ -68,49 +61,6 @@ public class ShellUtils {
         return result.toString();
     }
 
-    /**
-     * docker专属
-     * @param cmd
-     * @param dir
-     * @return
-     * @throws Exception
-     */
-    public static List<Docker> execdocker(String cmd, File dir) throws Exception {
-        Process process = null;
-        BufferedReader bufrIn = null;
-        BufferedReader bufrError = null;
-        List<Docker> list = new ArrayList<>();
-        try {
-            // 执行命令, 返回一个子进程对象（命令在子进程中执行）
-            process = Runtime.getRuntime().exec(cmd, null, dir);
-
-            // 方法阻塞, 等待命令执行完成（成功会返回0）
-            process.waitFor();
-
-            // 获取命令执行结果, 有两个结果: 正常的输出 和 错误的输出（PS: 子进程的输出就是主进程的输入）
-            bufrIn = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
-            bufrError = new BufferedReader(new InputStreamReader(process.getErrorStream(), "UTF-8"));
-
-            // 读取输出
-            String line = null;
-            bufrIn.readLine();//跳过第一行
-            while ((line = bufrIn.readLine()) != null) {
-                Docker docker = new Docker();
-                docker.setDocker_id(line.substring(0,12));
-                docker.setDocker_name(line.substring(line.length()-11,line.length()));
-                list.add(docker);
-            }
-        } finally {
-            closeStream(bufrIn);
-            closeStream(bufrError);
-            // 销毁子进程
-            if (process != null) {
-                process.destroy();
-            }
-        }
-        // 返回执行结果
-        return list;
-    }
 
     private static void closeStream(Closeable stream) {
         if (stream != null) {

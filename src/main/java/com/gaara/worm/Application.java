@@ -1,14 +1,13 @@
-package com.gaara.mp3;
+package com.gaara.worm;
 
-import net.unicon.cas.client.configuration.EnableCasClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 //@EnableCasClient
-public class Mp3Application {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Mp3Application.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 }
