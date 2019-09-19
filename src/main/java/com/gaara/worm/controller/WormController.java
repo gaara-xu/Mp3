@@ -29,7 +29,7 @@ public class WormController {
 
     @GetMapping("/qqq")
     public void qwe(){
-        String url = "curl https://www.afw9.com/xiaoshuo/list-校园春色-3.html";
+        String url = "curl https://www.ec533.com/xiaoshuo/list-校园春色-3.html";
         System.out.println(curl(url).toString());
         String result="";
         System.out.println("the str ===="+url);
